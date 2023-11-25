@@ -70,7 +70,7 @@ class Parser:
                     y = self.vals[self.prev_vars[-1].value]
                 else:
                     y = tmp
-                print(f'or x:{x},y:{y}')
+                # print(f'or x:{x},y:{y}')
                 if not ((x == 0) and (y == 0)):
                     res = res or True
 
@@ -82,7 +82,7 @@ class Parser:
                     y = self.vals[self.prev_vars[-1].value]
                 else:
                     y = tmp
-                print(f'and x:{x},y:{y}')
+                # print(f'and x:{x},y:{y}')
                 if (x == 1) and (y == 1):
                     res = True
 
@@ -96,7 +96,7 @@ class Parser:
                     y = self.vals[self.prev_vars[-1].value]
                 else:
                     y = tmp
-                print(f'var x:{x},y:{y}')
+                # print(f'var x:{x},y:{y}')
                 if (x == 1) and (y == 1):
                     res = True
 
