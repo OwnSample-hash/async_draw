@@ -3,14 +3,14 @@ from typing import Tuple, List
 
 
 TOKEN_TYPES = [
-    ('VAR', r'\w\d'),
-    ('VAR', r'\w'),
-    ('OR', r'\+'),
-    ('AND', r'\*'),
-    ('NOT', r'\!'),
-    ('LPAREN', r'\('),
-    ('RPAREN', r'\)'),
-    ('WHITESPACE', r'\s+'),
+    ("VAR", r"\w\d"),
+    ("VAR", r"\w"),
+    ("OR", r"\+"),
+    ("AND", r"\*"),
+    ("NOT", r"\!"),
+    ("LPAREN", r"\("),
+    ("RPAREN", r"\)"),
+    ("WHITESPACE", r"\s+"),
 ]
 
 
@@ -20,7 +20,7 @@ class Token:
         self.value: str = value
 
     def __str__(self):
-        return f'Token({self.type}, {repr(self.value)})'
+        return f"Token({self.type}, {repr(self.value)})"
 
 
 class LexerException(Exception):
@@ -46,7 +46,7 @@ class Lexer:
 
     def get_next_token(self) -> Token:
         if self.position >= len(self.text):
-            return Token('EOF', None)
+            return Token("EOF", None)
 
         for token_type, pattern in self.token_types:
             regex = re.compile(pattern)

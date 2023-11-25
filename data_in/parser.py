@@ -27,44 +27,44 @@ class Parser:
 
     def factor(self):
         token = self.current_token
-        if token.type == 'VAR':
-            self.eat('VAR')
+        if token.type == "VAR":
+            self.eat("VAR")
             self.prev_vars.append(token)
 
-        elif token.type == 'OR':
-            self.eat('OR')
+        elif token.type == "OR":
+            self.eat("OR")
 
-        elif token.type == 'LPAREN':
-            self.eat('LPAREN')
+        elif token.type == "LPAREN":
+            self.eat("LPAREN")
             result = self.expr()
-            self.eat('RPAREN')
+            self.eat("RPAREN")
             return result
 
-        elif token.type == 'NOT':
-            self.eat('NOT')
+        elif token.type == "NOT":
+            self.eat("NOT")
             try:
-                self.eat('VAR')
+                self.eat("VAR")
             except InvalidSyntax:
-                return self.eat('LPAREN')
+                return self.eat("LPAREN")
             self.factor()
         else:
-            raise ParserExcepction(f'Not implemented: {token}')
+            raise ParserExcepction(f"Not implemented: {token}")
 
     def term(self):
         res = False
         do_not_reset = False
         local_vals: Dict[str, bool] = self.vals
 
-        while self.current_token.type in ('OR', 'AND', 'VAR', 'NOT', 'LPAREN'):
+        while self.current_token.type in ("OR", "AND", "VAR", "NOT", "LPAREN"):
             token = self.current_token
             if do_not_reset:
                 do_not_reset = False
             else:
                 local_vals = self.vals
 
-            if token.type == 'OR':
+            if token.type == "OR":
                 x = local_vals[self.prev_vars[-1].value]
-                self.eat('OR')
+                self.eat("OR")
                 tmp = self.factor()
                 if tmp == None:
                     y = self.vals[self.prev_vars[-1].value]
@@ -74,9 +74,9 @@ class Parser:
                 if not ((x == 0) and (y == 0)):
                     res = res or True
 
-            if token.type == 'AND':
+            if token.type == "AND":
                 x = local_vals[self.prev_vars[-1].value]
-                self.eat('AND')
+                self.eat("AND")
                 tmp = self.factor()
                 if tmp == None:
                     y = self.vals[self.prev_vars[-1].value]
@@ -86,7 +86,7 @@ class Parser:
                 if (x == 1) and (y == 1):
                     res = True
 
-            if token.type == 'VAR':
+            if token.type == "VAR":
                 if not len(self.prev_vars):
                     self.factor()
                     continue
@@ -100,11 +100,11 @@ class Parser:
                 if (x == 1) and (y == 1):
                     res = True
 
-            if token.type == 'LPAREN':
+            if token.type == "LPAREN":
                 res = res or self.factor()
 
-            if token.type == 'NOT':
-                self.eat('NOT')
+            if token.type == "NOT":
+                self.eat("NOT")
                 tmp = self.factor()
                 if tmp == None:
                     local_vals[self.prev_vars[-1].value] = not self.vals[
